@@ -57,7 +57,11 @@ if __name__ == "__main__":
     for w in waste_days:
         bin_type = w.find("h4").text
         bin_date = w.find("strong").text
-        bins.append(MyBins(bin_type, parse(bin_date)))
+        try:
+            parsed_date = parse(bin_date)
+            bins.append(MyBins(bin_type, parse(bin_date)))
+        except ValueError:
+            pass
 
     bins = sorted(bins, key=attrgetter("Date"))
 
