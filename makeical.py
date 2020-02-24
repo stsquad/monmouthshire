@@ -37,7 +37,10 @@ def parse_arguments():
     parser = ArgumentParser(description="Create .ical from Local Info.")
     parser.add_argument("uprn", metavar="N", type=int,
                         help="Your Unique Property Reference Number")
-    parser.add_argument("--file", "-f", type=str, help="file to output")
+    parser.add_argument("--file", "-f", type=str,
+                        help="file to output")
+    parser.add_argument("--window", "-w", type=int, default=30,
+                        help="bin window period")
     return parser.parse_args()
 
 def fetch_info_page(uprn):
@@ -72,7 +75,7 @@ if __name__ == "__main__":
 
     # We want to put the bins out the evening before
     time_before = timedelta(hours=-6)
-    time_duration = timedelta(minutes=30)
+    time_duration = timedelta(minutes=args.window)
 
     for b in bins:
         e = Event()
