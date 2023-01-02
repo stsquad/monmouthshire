@@ -22,6 +22,7 @@ from dateutil.parser import parse
 from operator import attrgetter
 from icalendar import Calendar, Event
 from datetime import timedelta
+from pathlib import Path
 
 import requests
 
@@ -87,6 +88,9 @@ if __name__ == "__main__":
         cal.add_component(e)
 
     if args.file:
+        d = Path(args.file).parent.resolve()
+        if not d.exists():
+            d.mkdir(parents=True)
         f = open(args.file, 'wb')
         f.write(cal.to_ical())
     else:
